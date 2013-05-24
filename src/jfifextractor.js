@@ -73,7 +73,12 @@ function JFIFExtractor() {
     };
     this.findJFIF = function(k, p) {
         var i, m, r, l = [], q = {}, h, j, o = false, n = false;
-        e = new c.YDataView(k);
+
+        e = new jDataView(k);
+        e.getByteAt = dataview.getUint8;
+        e.getShortAt = dataview.getUint16;
+        e.length = k.byteLength;
+
         while (g + 2 < e.length) {
             if (e.getShortAt(g, false) == 65517) {
                 self.postMessage({

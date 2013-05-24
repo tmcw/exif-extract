@@ -169,7 +169,6 @@ function ExifExtractor() {
             }
         }
         self.postMessage({
-            guid: m.guid,
             Exif: p
         });
     }
@@ -196,8 +195,44 @@ function ExifExtractor() {
     }
     this.getImageData = function(j, i) {
         dataview = new jDataView(j);
-        dataview.getByteAt = dataview.getInt8;
+        dataview.getByteAt = dataview.getUint8;
+        dataview.getShortAt = dataview.getUint16;
+
+        dataview.getBytesAt = function(j, h) {
+            var f = [];
+            for (var g = 0; g < h; g++) {
+                f[g] = this.getByteAt(j + g);
+            }
+            return f;
+        };
+
+        dataview.getLongAt = function(g, f) {
+            if (d.DataView) {
+                return this.buffer.getUint32(g, f);
+            } else {
+                return this.getUint32(g, f);
+            }
+        };
+
+        dataview.getSLongAt = function(g, f) {
+            if (d.DataView) {
+                return this.buffer.getInt32(g, f);
+            } else {
+                return this.getInt32(g, f);
+            }
+        };
+
+        dataview.getStringAt = function(k, j) {
+            var g = [];
+            var f = this.getBytesAt(k, j);
+            for (var h = 0; h < j; h++) {
+                g[h] = String.fromCharCode(f[h]);
+            }
+            return g.join("");
+        };
+
         dataview.guid = i;
+        dataview.length = j.byteLength;
         parseExif(dataview);
     };
 }

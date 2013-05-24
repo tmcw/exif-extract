@@ -1,7 +1,9 @@
 var worker = new Worker('src/worker.js');
 
-worker.addEventListener('message', function() {
-    console.log(arguments);
+worker.postMessage = worker.webkitPostMessage || worker.postMessage;
+
+worker.addEventListener('message', function(e) {
+    console.log(e.data);
 });
 
 d3.select('body')
@@ -13,12 +15,12 @@ d3.select('body')
             reader = new FileReader();
 
         reader.onload = function(e) {
-            worker.postMessage({
-                arrayBuffer: reader.result
-            });
+            var data = reader.result;
+            console.log(data);
+            worker.postMessage(data, [data]);
         };
 
-        reader.readAsBinaryString(f);
+        reader.readAsArrayBuffer(f);
     })
     .on('dragenter.localgpx', over)
     .on('dragexit.localgpx', over)
