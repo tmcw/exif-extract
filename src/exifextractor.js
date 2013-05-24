@@ -164,7 +164,8 @@ function ExifExtractor() {
         }
 
         postMessage({
-            Exif: p
+            type: 'exif',
+            exif: p
         });
     }
 
