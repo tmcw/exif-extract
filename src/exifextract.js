@@ -6,7 +6,7 @@ function exifExtract(data, cb) {
     worker.addEventListener('message', onMessage);
     worker.postMessage(data, [data]);
 
-    var data = {};
+    var resp = {};
 
     function hasPosition(exif) {
         return (typeof exif.GPSLatitude !== undefined);
@@ -18,21 +18,31 @@ function exifExtract(data, cb) {
                 exif.GPSLatitude[0],
                 exif.GPSLatitude[1], 0,
                 exif.GPSLatitudeRef),
-                coords.fromSexagesimalRaw(
-                    exif.GPSLongitude[0],
-                    exif.GPSLongitude[1], 0,
-                    exif.GPSLongitudeRef)];
+            coords.fromSexagesimalRaw(
+                exif.GPSLongitude[0],
+                exif.GPSLongitude[1], 0,
+                exif.GPSLongitudeRef)
+        ];
     }
 
     function onMessage(e) {
         if (e.data.type) {
             if (e.data.type == 'exif') {
-                data.position = decodePosition(e.data.exif);
-                data.exif = decodePosition(e.data.exif);
+                resp.position = decodePosition(e.data.exif);
+                resp.exif = decodePosition(e.data.exif);
+            }
+
+            if (e.data.type == 'thumbnail') {
+                resp.thumbnail = e.data.thumb_src;
+            }
+
+            if (e.data.type == 'error') {
+                cb(e.data.msg);
             }
         }
+
         if (e.data.finished) {
-            cb(null, data);
+            cb(null, resp);
         }
     }
 }

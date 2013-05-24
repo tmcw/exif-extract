@@ -7,6 +7,7 @@ function ExifExtractor() {
         if (j.getByteAt(0) != 255 || j.getByteAt(1) != 216) {
 
             self.postMessage({
+                type: 'error',
                 msg: 'ERROR: Not a valid JPEG'
             });
 
@@ -23,6 +24,7 @@ function ExifExtractor() {
 
                 if (j.getByteAt(l) != 255) {
                     self.postMessage({
+                        type: 'error',
                         msg: 'ERROR: Not a valid marker at offset ' + l + ', found: ' + j.getByteAt(l)
                     });
                     break;
@@ -190,7 +192,7 @@ function ExifExtractor() {
         }
 
         self.postMessage({
-            type: 'data',
+            type: 'thumbnail',
             thumb_src: 'data:image/jpeg,%' + l.join('%')
         });
     }

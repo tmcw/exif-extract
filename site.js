@@ -13,9 +13,18 @@ d3.select('body')
             var data = reader.result;
             exifExtract(data, function(err, result) {
                 if (err) throw err;
+
                 if (result.position) {
                     map.setView(result.position, 13);
                 }
+
+                if (result.position && result.thumbnail) {
+                    var popup = L.popup()
+                        .setLatLng(result.position)
+                        .setContent('<img src="' + result.thumbnail + '" />')
+                        .openOn(map);
+                }
+
             });
         };
 
