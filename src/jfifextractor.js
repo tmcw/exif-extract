@@ -1,4 +1,4 @@
-function jfifExtractor() {
+function JFIFExtractor() {
     var g = 0, e, f = {}, d = {
         0: "ApplicationRecordVersion",
         3: "ObjectTypeReference",

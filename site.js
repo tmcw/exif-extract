@@ -1,10 +1,8 @@
-function over() {
-    d3.event.stopPropagation();
-    d3.event.preventDefault();
-    d3.event.dataTransfer.dropEffect = 'copy';
-}
+var worker = new Worker('src/worker.js');
 
-var exif = new exifExtractor();
+worker.addEventListener('message', function() {
+    console.log(arguments);
+});
 
 d3.select('body')
     .attr('dropzone', 'copy')
@@ -15,7 +13,9 @@ d3.select('body')
             reader = new FileReader();
 
         reader.onload = function(e) {
-            exif.getImageData(reader.result);
+            worker.postMessage({
+                arrayBuffer: reader.result
+            });
         };
 
         reader.readAsBinaryString(f);
@@ -23,3 +23,9 @@ d3.select('body')
     .on('dragenter.localgpx', over)
     .on('dragexit.localgpx', over)
     .on('dragover.localgpx', over);
+
+function over() {
+    d3.event.stopPropagation();
+    d3.event.preventDefault();
+    d3.event.dataTransfer.dropEffect = 'copy';
+}

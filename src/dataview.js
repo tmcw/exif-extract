@@ -25,7 +25,15 @@ function dataView(e) {
         return h + (g ? f - i - 1 : i);
     };
     this.getFloat64 = function(i, f) {
-        var r = this.getUint8(this.endianness(i, 0, 8, f)), q = this.getUint8(this.endianness(i, 1, 8, f)), p = this.getUint8(this.endianness(i, 2, 8, f)), n = this.getUint8(this.endianness(i, 3, 8, f)), m = this.getUint8(this.endianness(i, 4, 8, f)), l = this.getUint8(this.endianness(i, 5, 8, f)), k = this.getUint8(this.endianness(i, 6, 8, f)), j = this.getUint8(this.endianness(i, 7, 8, f)), h = 1 - 2 * (r >> 7), o = ((r << 1 & 255) << 3 | q >> 4) - (Math.pow(2, 10) - 1), g = (q & 15) * Math.pow(2, 48) + p * Math.pow(2, 40) + n * Math.pow(2, 32) + m * Math.pow(2, 24) + l * Math.pow(2, 16) + k * Math.pow(2, 8) + j;
+        var r = this.getUint8(this.endianness(i, 0, 8, f)),
+            q = this.getUint8(this.endianness(i, 1, 8, f)),
+            p = this.getUint8(this.endianness(i, 2, 8, f)),
+            n = this.getUint8(this.endianness(i, 3, 8, f)),
+            m = this.getUint8(this.endianness(i, 4, 8, f)),
+            l = this.getUint8(this.endianness(i, 5, 8, f)),
+            k = this.getUint8(this.endianness(i, 6, 8, f)),
+            j = this.getUint8(this.endianness(i, 7, 8, f)),
+            h = 1 - 2 * (r >> 7), o = ((r << 1 & 255) << 3 | q >> 4) - (Math.pow(2, 10) - 1), g = (q & 15) * Math.pow(2, 48) + p * Math.pow(2, 40) + n * Math.pow(2, 32) + m * Math.pow(2, 24) + l * Math.pow(2, 16) + k * Math.pow(2, 8) + j;
         if (g == 0 && o == -(Math.pow(2, 10) - 1)) {
             return 0;
         }

@@ -1,7 +1,7 @@
-function exifExtractor() {
+function ExifExtractor() {
     var e = true;
     var h = new exifTags();
-    function g(j) {
+    function parseExif(j) {
         var m = [], l, k, i;
         if (j.getByteAt(0) != 255 || j.getByteAt(1) != 216) {
             if (e) {
@@ -131,7 +131,10 @@ function exifExtractor() {
                     break;
 
                   case "ComponentsConfiguration":
-                    n[q] = h.Exif.StringValues.Components[n[q][0]] + h.Exif.StringValues.Components[n[q][1]] + h.Exif.StringValues.Components[n[q][2]] + h.Exif.StringValues.Components[n[q][3]];
+                    n[q] = h.Exif.StringValues.Components[n[q][0]] +
+                        h.Exif.StringValues.Components[n[q][1]] +
+                        h.Exif.StringValues.Components[n[q][2]] +
+                        h.Exif.StringValues.Components[n[q][3]];
                     break;
                 }
                 p[q] = n[q];
@@ -192,8 +195,9 @@ function exifExtractor() {
         });
     }
     this.getImageData = function(j, i) {
-        dataview = new c.YDataView(j);
+        dataview = new jDataView(j);
+        dataview.getByteAt = dataview.getInt8;
         dataview.guid = i;
-        g(dataview);
+        parseExif(dataview);
     };
 }

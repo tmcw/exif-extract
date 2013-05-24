@@ -1,4 +1,4 @@
-function xmpExtractor() {
+function XMPExtractor() {
     this.findXMP = function(k, g) {
         var j = new Uint8Array(k), e = "", l, d, f, h;
         for (h = 0; h < k.byteLength; h++) {
