@@ -3,6 +3,10 @@ var worker = new Worker('src/worker.js');
 worker.postMessage = worker.webkitPostMessage || worker.postMessage;
 
 worker.addEventListener('message', function(e) {
+    if (e.data.thumb_src) {
+        console.log(e.data.thumb_src);
+    }
+
     if (e.data.Exif) {
 
         var lat = coords.fromSexagesimalRaw(
