@@ -3,8 +3,25 @@ var worker = new Worker('src/worker.js');
 worker.postMessage = worker.webkitPostMessage || worker.postMessage;
 
 worker.addEventListener('message', function(e) {
-    console.log(e.data);
+    if (e.data.Exif) {
+
+        var lat = coords.fromSexagesimalRaw(
+            e.data.Exif.GPSLatitude[0],
+            e.data.Exif.GPSLatitude[1], 0,
+            e.data.Exif.GPSLatitudeRef);
+
+        var lon = coords.fromSexagesimalRaw(
+            e.data.Exif.GPSLongitude[0],
+            e.data.Exif.GPSLongitude[1], 0,
+            e.data.Exif.GPSLongitudeRef);
+
+        map.setView([lat, lon], 18);
+
+    }
 });
+
+var map = L.mapbox.map('map', 'examples.map-4l7djmvo')
+    .setView([40, -74.50], 9);
 
 d3.select('body')
     .attr('dropzone', 'copy')
@@ -16,7 +33,6 @@ d3.select('body')
 
         reader.onload = function(e) {
             var data = reader.result;
-            console.log(data);
             worker.postMessage(data, [data]);
         };
 

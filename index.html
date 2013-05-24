@@ -3,22 +3,31 @@
     <head>
         <title>exflick</title>
         <meta http-equiv='content-type' content='text/html; charset=utf-8' />
+        <script src='http://api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.js'></script>
+        <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.css' rel='stylesheet' />
+        <!--[if lte IE 8]>
+          <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.ie.css' rel='stylesheet' >
+        <![endif]-->
         <style>
         body {
-            width:500px;
+            padding:0;
+            margin:0;
             margin:20px auto;
+            font:sans-serif;
         }
-        .target {
-            width:500px;
-            height:300px;
-            background:#eee;
-            border:1px solid #f2f;
+        #map {
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
         }
         </style>
     </head>
     <body>
-        <div class='target'></div>
+        <div id='map'></div>
         <script src='lib/d3.v3.min.js'></script>
+        <script src='lib/coords.js'></script>
         <script src='site.js'></script>
     </body>
 </html>

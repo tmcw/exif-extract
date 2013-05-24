@@ -189,7 +189,6 @@ function ExifExtractor() {
             }
         }
         self.postMessage({
-            guid: j.guid,
             thumb_src: "data:image/jpeg,%" + l.join("%")
         });
     }
