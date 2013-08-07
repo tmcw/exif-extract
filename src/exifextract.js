@@ -16,11 +16,13 @@ function exifExtract(data, cb) {
         return exif.GPSLatitude && [
             coords.fromSexagesimalRaw(
                 exif.GPSLatitude[0],
-                exif.GPSLatitude[1], 0,
+                exif.GPSLatitude[1],
+                exif.GPSLatitude[2],
                 exif.GPSLatitudeRef),
             coords.fromSexagesimalRaw(
                 exif.GPSLongitude[0],
-                exif.GPSLongitude[1], 0,
+                exif.GPSLongitude[1],
+                exif.GPSLongitude[2],
                 exif.GPSLongitudeRef)
         ];
     }
