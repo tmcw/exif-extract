@@ -1,6 +1,8 @@
 var map = L.mapbox.map('map', 'tmcw.map-ajwqaq7t')
     .setView([40, -74.50], 9);
 
+var hash = new L.Hash(map);
+
 d3.select('body')
     .attr('dropzone', 'copy')
     .on('drop.localgpx', function() {
